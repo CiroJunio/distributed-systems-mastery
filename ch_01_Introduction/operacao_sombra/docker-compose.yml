@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  server-a: &server_base
+    build: .
+    image: operacao_sombra:latest
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 50M # A GUILHOTINA: OOM Killer se passar disso
+    networks:
+      - frota_net
+    volumes:
+      - .:/app # Hot-reload para desenvolvimento
+
+  server-b:
+    <<: *server_base
+
+  server-c:
+    <<: *server_base
+
+  drone-sim:
+    build: .
+    deploy:
+      resources:
+        limits:
+          memory: 32M
+    networks:
+      - frota_net
+    environment:
+      - JITTER_MS=800 # Simulação de latência geográfica
+
+networks:
+  frota_net:
+    driver: bridge
