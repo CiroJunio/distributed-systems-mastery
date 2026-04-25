@@ -1,0 +1,19 @@
+# Artifacts
+build/
+bin/
+*.o
+*.a
+*.so
+
+# Docker
+.dockerignore
+
+# IDEs
+.vscode/
+.idea/
+cmake-build-*/
+
+# Logs e Dumps
+*.log
+vgcore.*
+massif.out.*
